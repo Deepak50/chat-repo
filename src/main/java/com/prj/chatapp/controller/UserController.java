@@ -24,11 +24,20 @@ public class UserController {
 	
 	@GetMapping("/getLoggedInUserDetails")
 	public ResponseDto getLoggedInUserDetails(@RequestHeader(name = "Authorization", required = false) String token, Principal user) throws UnsupportedEncodingException {
-//		ExtractUserAttributes e = new ExtractUserAttributes();
 		ExtractToken e = new ExtractToken();
 		JSONObject attributes =  e.decodeJwt(token);
 		
 		String userId = (String) attributes.get("email");
 		return userService.getLoggedInUserDetails(userId);
 	}
+	
+	@GetMapping("/addFriend")
+	public ResponseDto getLoggedInUserDetails(@RequestHeader(name = "Authorization", required = false) String token, String friendId) throws UnsupportedEncodingException{
+		ExtractToken e = new ExtractToken();
+		JSONObject attributes =  e.decodeJwt(token);
+		
+		String userId = (String) attributes.get("email");
+		return userService.addFriend(userId, friendId);
+	}
+	
 }

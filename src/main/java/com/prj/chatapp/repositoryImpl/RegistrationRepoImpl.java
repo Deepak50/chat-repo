@@ -9,7 +9,7 @@ import com.prj.chatapp.entity.Userr;
 import com.prj.chatapp.repository.RegistrationRepo;
 import com.prj.chatapp.repository.UserRepository;
 
-
+//Delete this later. May be this is not needed
 @Repository
 public class RegistrationRepoImpl implements RegistrationRepo {
 	

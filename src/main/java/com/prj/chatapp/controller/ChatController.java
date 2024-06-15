@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prj.chatapp.dto.ChatDto;
+import com.prj.chatapp.dto.LoggedInUserDetailsDto;
 import com.prj.chatapp.dto.ResponseDto;
 import com.prj.chatapp.model.MsgData;
 import com.prj.chatapp.service.ChatService;
@@ -58,8 +59,18 @@ public class ChatController {
 	
 	
 	@GetMapping("/getUsername")
-	public String getUsername(Principal principal){
-		return principal.getName();
+	public LoggedInUserDetailsDto getUsername(@RequestHeader(name = "Authorization", required = false) String token) throws UnsupportedEncodingException{
+		ExtractToken e = new ExtractToken();
+		JSONObject attributes =  e.decodeJwt(token);
+		
+		LoggedInUserDetailsDto user = new LoggedInUserDetailsDto();
+		user.setUsername(attributes.getString("email"));
+		user.setName(attributes.getString("name"));
+		user.setGivenName(attributes.getString("given_name"));
+		user.setPicture(attributes.getString("picture"));
+		user.setFamilyName(attributes.getString("family_name"));
+		
+		return user;
 	}
 	
 	@PostMapping("/saveChat")
@@ -74,21 +85,36 @@ public class ChatController {
 		JSONObject attributes =  e.decodeJwt(token);
 
 		userId = (String) attributes.get("email");
-		
-		
 		System.out.println("acc token : "+token);
 		return chatService.getChatList(userId);
 	}
 	
 	@GetMapping("/getChat/{toUserId}")
-	public ResponseDto getChat(@RequestHeader(name = "Authorization", required = false) String token, Principal usr, @PathVariable("toUserId") String toUserId) throws UnsupportedEncodingException {
-		
+	public ResponseDto getChat(@RequestHeader(name = "Authorization", required = false) String token, Principal usr, @PathVariable("toUserId") String toUserId) throws UnsupportedEncodingException {	
 		ExtractToken e = new ExtractToken();
 		JSONObject attributes =  e.decodeJwt(token);
 		String fromUserId = (String) attributes.get("email");
 		
-		
 		return chatService.getChat(fromUserId, toUserId);
+	}
+	
+	@GetMapping("/getFriends")
+	public ResponseDto getFriends(@RequestHeader(name = "Authorization", required = false) String token) throws UnsupportedEncodingException {
+		ExtractToken e = new ExtractToken();
+		JSONObject attributes =  e.decodeJwt(token);
+		String userId = (String) attributes.get("email");
+		
+		return chatService.getFriends(userId);
+	}
+	
+	@GetMapping("/getEverything")
+	public ResponseDto getEverything(@RequestHeader(name = "Authorization", required = false) String token) throws UnsupportedEncodingException {
+		
+		ExtractToken e = new ExtractToken();
+		JSONObject attributes =  e.decodeJwt(token);
+		String userId = (String) attributes.get("email");
+		
+		return chatService.getEverything(userId);
 	}
 	
 	

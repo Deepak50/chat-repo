@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDto {
-	private Integer statusCode;
-	private String status;
-	private String message;
-	private Object Data;
+public class GetFriendsDto {
+	private String userId;
+	private String friendId;
 }

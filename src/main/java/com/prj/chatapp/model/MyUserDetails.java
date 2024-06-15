@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+//forgot why this is used!! need to revise
 public class MyUserDetails implements UserDetails {
 
     private String userName;

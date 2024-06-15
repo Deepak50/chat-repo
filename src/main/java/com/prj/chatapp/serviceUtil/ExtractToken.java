@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.RequestBody;
 
 public class ExtractToken {
 
@@ -14,5 +13,7 @@ public class ExtractToken {
 		JSONObject json = new JSONObject(jsonString);
 		return json;
 	}
+	
+	
 
 }

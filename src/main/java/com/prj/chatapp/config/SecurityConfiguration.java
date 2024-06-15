@@ -90,6 +90,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.prj.chatapp.constants.UrlConstants;
+
 @Configuration
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -100,7 +102,7 @@ public class SecurityConfiguration {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.addAllowedOrigin("http://localhost:3000"); // Allow requests from any origin
-		config.addAllowedOrigin("https://chatappui-gpqj.onrender.com");
+		config.addAllowedOrigin(UrlConstants.UI_ENDPOINT);
 		config.addAllowedMethod("*"); // Allow all HTTP methods
 		config.addAllowedHeader("*"); // Allow all headers
 		config.setAllowCredentials(true);
@@ -108,7 +110,7 @@ public class SecurityConfiguration {
 		return new CorsFilter(source);
 	}
 
-	private String[] noauth = {"token/**", "socket/**","stomp-endpoint/**"};
+	private String[] noauth = {"token/**", "socket/**","stomp-endpoint/**","/v3/api-docs/**", "/swagger-ui/**"};
 	
 	@SuppressWarnings("deprecation")
 	@Bean

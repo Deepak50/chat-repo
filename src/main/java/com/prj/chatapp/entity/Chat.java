@@ -2,6 +2,8 @@ package com.prj.chatapp.entity;
 
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +36,7 @@ public class Chat {
 	private Userr toUser;
 	@Lob
 	private String chatDesc;
+	@CreationTimestamp
 	private Date sentTime;
 	private Date deliveredTime;
 	private Date seenTime;

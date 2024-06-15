@@ -18,6 +18,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.prj.chatapp.model.Token;
 
+
+//this was created as a redirect url for access token. this is handled from the front end now. Just keeping it for reference
 @RestController
 @RequestMapping("/token")
 public class TokenController {
@@ -54,9 +56,7 @@ public class TokenController {
         System.out.println("Auth User: " + authUser);
         System.out.println("Prompt: " + prompt);
         
-//        WebClient webClient = WebClient.create();
-//
-//        // Define the request body
+        // Define the request body
         System.out.println("authCode: "+ authorizationCode);
         String clientId = "49280116826-5j8ia9avme7fhj4eu456mvqlafm3qmss.apps.googleusercontent.com";
         String clientSecret = "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";
@@ -93,7 +93,6 @@ public class TokenController {
         
         // Return the token as a string representation
         return token.getId_token().toString();
-
         
     }
 }

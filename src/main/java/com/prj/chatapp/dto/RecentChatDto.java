@@ -1,5 +1,7 @@
 package com.prj.chatapp.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDto {
-	private Integer statusCode;
-	private String status;
-	private String message;
-	private Object Data;
+public class RecentChatDto {
+	private String userName;
+	private Date sentDate;
 }
