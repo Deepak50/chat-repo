@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class GrpChat {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String grpChatId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long grpChatId;
 	
 	@ManyToOne
 	@JoinColumn(name = "from_user_id")

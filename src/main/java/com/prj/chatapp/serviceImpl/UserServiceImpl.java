@@ -1,5 +1,7 @@
 package com.prj.chatapp.serviceImpl;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,34 +14,40 @@ import com.prj.chatapp.repository.UserRepository;
 import com.prj.chatapp.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private FriendRepository friendRepository;
-	
+
 	@Override
 	public ResponseDto getLoggedInUserDetails(String user) {
-		ResponseDto responseDto  = new ResponseDto();
+		ResponseDto responseDto = new ResponseDto();
 		responseDto.setStatusCode(200);
 		responseDto.setData(userRepository.findById(user));
 		return responseDto;
 	}
-	
+
 	@Override
-	public ResponseDto addFriend(String userId ,String friendId) {
-		ResponseDto responseDto  = new ResponseDto();
+	public ResponseDto addFriend(String userId, String friendId) {
+		ResponseDto responseDto = new ResponseDto();
 		responseDto.setStatusCode(200);
-		
+
 		Userr user = userRepository.findById(userId).get();
-		Userr friend = userRepository.findById(friendId).get();
-		
+		Userr friend = null;
+		try {
+			friend = userRepository.findById(friendId).get();
+		} catch (NoSuchElementException e) {
+			responseDto.setMessage("No such user exists");
+			return responseDto;
+		}
 		Friends f = new Friends(new FriendsCk(user.getUserId(), friend.getUserId()));
+
 		friendRepository.save(f);
-		
+
 		return responseDto;
 	}
-	
+
 }

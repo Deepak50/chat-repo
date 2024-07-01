@@ -16,7 +16,7 @@ function select(str) {
 }
 
 function connect() {
-	var socket = new SockJS('https://chatapp-zoa1.onrender.com/stomp-endpoint');
+	var socket = new SockJS('http://localhost:8080/stomp-endpoint');
 	var userName = select("#userName").value;
 	console.log("----------------------------------------------",userName);
 	stompClient = Stomp.over(socket);

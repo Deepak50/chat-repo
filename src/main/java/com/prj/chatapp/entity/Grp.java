@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Grp {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String grpId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long grpId;
 	private String grpName;
 	private String grpDesc;
 	private String grpPic;

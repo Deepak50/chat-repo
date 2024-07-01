@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.prj.chatapp.dto.ChatDto;
 import com.prj.chatapp.dto.ChatListDto;
+import com.prj.chatapp.dto.ChatWithProfilePicDto;
 import com.prj.chatapp.dto.RecentChatDto;
 import com.prj.chatapp.dto.RecentChatWithUserName;
 import com.prj.chatapp.dto.ResponseDto;
@@ -48,6 +49,7 @@ public class ChatServiceImpl implements ChatService {
 
 	@Autowired
 	private ModelMapper m;
+	
 
 	@Override
 	public ResponseDto saveChat(ChatDto chatDto) {
@@ -163,7 +165,10 @@ public class ChatServiceImpl implements ChatService {
 				if (userChatMap.containsKey(chat.getFromUser().getUserId())) {
 					List<Chat> userChats = userChatMap.get(chat.getFromUser().getUserId());
 					userChats.add(chat);
+//					ChatWithProfilePicDto chatWithProfilePicDto = new ChatWithProfilePicDto();
+//					chatWithProfilePicDto
 					userChatMap.put(chat.getFromUser().getUserId(), userChats);
+					
 				} else {
 					List<Chat> userChats = new ArrayList<Chat>();
 					userChats.add(chat);
@@ -211,7 +216,22 @@ public class ChatServiceImpl implements ChatService {
 		// sort the chatList on the basis of most recent chat (user) at the top
 		SortUserChatMap sortUserChatMap = new SortUserChatMap();
 		Collections.sort(userChatMapDtos, sortUserChatMap);
-
+		
+		
+		List<String> friendsObj = friendRepository.getFriends(userId);
+		List<UserChatMapDto> friends = friendsObj.stream().map(a -> new UserChatMapDto(a, userMap.get(a), null))
+				.collect(Collectors.toList());
+		
+		System.out.println("frineds: "+friends.toString());
+		
+		List<UserChatMapDto> friendsWithNoChatHistory = friends.stream().filter(a -> !(userChatMapDtos.stream().map(b -> b.getUserId())
+				.collect(Collectors.toList()).contains(a.getUserId()))).collect(Collectors.toList());
+		
+		System.out.println("fwnch: "+ friendsWithNoChatHistory);
+//		friend
+		
+		friendsWithNoChatHistory.forEach((item)->{userChatMapDtos.add(0,item);});
+		
 		responseDto.setData(userChatMapDtos);
 		return responseDto;
 	}

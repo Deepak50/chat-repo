@@ -53,6 +53,7 @@ public class ChatController {
 		LOGGER.error("To user : " + msgData.getTo());
 		System.out.println("Testing sysout.......");
 		simpMessagingTemplate.convertAndSendToUser(msgData.getTo(), "/msg", msgData.getMessage());
+		System.out.println("----------------  "+msgData.getMessage());
 		// simpMessagingTemplate.convertAndSend("/user/ramesh/msg",
 		// msgData.getMessage());
 	}
@@ -68,7 +69,7 @@ public class ChatController {
 		user.setName(attributes.getString("name"));
 		user.setGivenName(attributes.getString("given_name"));
 		user.setPicture(attributes.getString("picture"));
-		user.setFamilyName(attributes.getString("family_name"));
+//		user.setFamilyName(attributes.getString("family_name"));
 		
 		return user;
 	}
