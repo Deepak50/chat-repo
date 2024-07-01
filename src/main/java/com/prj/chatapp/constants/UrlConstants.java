@@ -1,8 +1,8 @@
 package com.prj.chatapp.constants;
 
 public class UrlConstants {
-	public static final String UI_ENDPOINT = "http://localhost:3000";
-	public static final String BACKEND_ENDPOINT = "http://localhost:8080";
+	public static final String UI_ENDPOINT = "https://chat-app-ui-vercel1.vercel.app";
+	public static final String BACKEND_ENDPOINT = "https://chatapp-zoa1.onrender.com";
 }
 
 //remote-ui: https://chat-app-ui-vercel1.vercel.app
