@@ -164,6 +164,9 @@ public class ChatServiceImpl implements ChatService {
 			if (!chat.getFromUser().getUserId().equals(userId)) {
 				if (userChatMap.containsKey(chat.getFromUser().getUserId())) {
 					List<Chat> userChats = userChatMap.get(chat.getFromUser().getUserId());
+					
+					ChatWithProfilePicDto c = new ChatWithProfilePicDto();
+//					c.getUserChats()
 					userChats.add(chat);
 //					ChatWithProfilePicDto chatWithProfilePicDto = new ChatWithProfilePicDto();
 //					chatWithProfilePicDto
@@ -206,6 +209,12 @@ public class ChatServiceImpl implements ChatService {
 
 			// convert maps to dto so its more readable and traversible from the UI
 			UserChatMapDto userChatMapDto = new UserChatMapDto();
+			if (!chatsToSort.get(0).getFromUser().getUserId().equals(userId)) {
+				userChatMapDto.setProfilePic(chatsToSort.get(0).getFromUser().getProfilePic());
+			}
+			else {
+				userChatMapDto.setProfilePic(chatsToSort.get(0).getToUser().getProfilePic());
+			}
 			userChatMapDto.setUserId(entry.getKey());
 			userChatMapDto.setName(userMap.get(entry.getKey()));
 			userChatMapDto.setChats(entry.getValue());
@@ -219,7 +228,7 @@ public class ChatServiceImpl implements ChatService {
 		
 		
 		List<String> friendsObj = friendRepository.getFriends(userId);
-		List<UserChatMapDto> friends = friendsObj.stream().map(a -> new UserChatMapDto(a, userMap.get(a), null))
+		List<UserChatMapDto> friends = friendsObj.stream().map(a -> new UserChatMapDto(a, userMap.get(a),null, null))
 				.collect(Collectors.toList());
 		
 		System.out.println("frineds: "+friends.toString());

@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 public class UserChatMapDto {
 	private String userId;
 	private String name;
+	private String profilePic;
 	private List<Chat> chats;
 }
